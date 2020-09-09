@@ -1,13 +1,20 @@
-const photosLoaded = (newMenu) => {
+export const photosLoaded = (photos) => {
   return {
       type: 'PHOTOS_LOADED',
-      //payload: newList
+      payload: photos
   }
 }
 
-const photosRequested = () => {
+export const photosRequested = () => {
   return {
       type: 'PHOTOS_REQUESTED',
+  }
+}
+
+export const auth = (isAuth) => {
+  return {
+      type: 'AUTH',
+      payload: isAuth
   }
 }
 

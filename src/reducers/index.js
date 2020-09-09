@@ -1,16 +1,23 @@
 const initialState = {
     photos: [
-        {"id": 1, "url": "https://via.placeholder.com/150", "preview":"https://via.placeholder.com/10", "author": "Ivan", "likes": "5", "date": "10/10/10"},
-        {"id": 2, "url": "https://via.placeholder.com/150"}
-
+        {id: "mtNweauBsMQ", created_at: "2015-09-29T07:49:08-04:00", updated_at: "2020-08-28T01:05:17-04:00", promoted_at: "2015-09-29T07:49:08-04:00", width: 5683}
     ],
-    isAuth: false,
+    isAuth : false,
     //loading: true,
     //error: false,
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case ('AUTH'):
+            
+        {
+            console.log(state, action.payload);
+            return {
+                ...state,
+                //isAuth: action.payload,
+                isAuth: true
+            }}
         case 'PHOTOS_LOADED':
             return {
                 ...state,

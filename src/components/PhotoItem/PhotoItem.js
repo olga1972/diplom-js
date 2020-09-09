@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+//import PhotosList from '../../components/PhotosList/PhotosList';
 
-const PhotoItem = ( props) => {
-    const {id, preview, url, author, date, likes} = props;
+//import PhotoDetails from '../../components/PhotoDetails/PhotoDetails';
 
-    return (
-        <>
-            <li className="photo__item">
-                <div className="photo__id">{id}</div>
-                <img className="photo__img" src={url} alt={id}></img>
-                <img className="photo__preview" src={preview} alt="preview"></img>
-                <div className="photo__author">{author}</div>
+class PhotoItem extends Component {
+    
+    render() {
+        let { id, preview, author, date, likes } = this.props;
+
+        return (
+            preview ? 
+            (
+                <>
+                 <Link to={`/photos/${id}`}>
+                    <img className="photo__preview" src={preview.small} alt="preview" />
+                </Link>
+                <div className="photo__author">{author.name}</div>
+
                 <div className="photo__date">{date}</div>
                 <div className="photo__likes">{likes}</div>
-            </li>
-        
-        </>
-    )
+
+                <div className="photo__id">{id}</div>
+
+                <a href={author.links.html} target="_blank" rel="noopener noreferrer">Посмотреть профиль</a>
+
+              </>
+            ) 
+
+            : false
+        )
+    }
 }
 
 
