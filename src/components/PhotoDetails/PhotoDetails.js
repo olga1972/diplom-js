@@ -37,7 +37,7 @@ const PhotoDetails = (props) => {
     return (
         <>
         <h2>PhotoDetails</h2>
-        <p>{match.params.id}</p>
+        
             <div>
                 <PhotoItem
                     key = { onePhoto.id }
@@ -49,6 +49,7 @@ const PhotoDetails = (props) => {
                     {/* photoItem = { photoItem } */}
                     {/* onClick={ () => this.onPhotoSelected(photo.id)} */}
             </div>
+            <button>Поставить лайк</button>
             <Link to="/photos">Вернуться в галерею</Link>
         </>
     )

@@ -10,21 +10,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ('AUTH'):
-            
-        {
-            console.log(state, action.payload);
             return {
                 ...state,
-                //isAuth: action.payload,
                 isAuth: true
-            }}
+            }
         case 'PHOTOS_LOADED':
             return {
                 ...state,
                 photos: action.payload,
                 //loading: false,
                 //error: false
-            };
+            }
+
         case 'PHOTOS_REQUESTED':
             return {
                 ...state,

@@ -6,6 +6,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 
 import store from './store';
 
+
 //import './index.scss';
 
 //import 'bootstrap/dist/css/bootstrap.css';
