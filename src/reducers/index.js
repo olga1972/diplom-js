@@ -29,6 +29,39 @@ const reducer = (state = initialState, action) => {
                 //loading: true,
                 //error: false
             };
+
+        case 'SET_LIKE_PHOTO':
+            action.payload.likes++;
+            
+            return {
+                ...state,
+                photos: state.photos.map(photo => {
+                  if(photo.id === action.payload.id) {
+                    return {
+                      ...photo,
+                      likes: action.payload.likes,
+                    }
+                  }
+                  return photo;
+                })
+              };
+
+        case 'UNSET_LIKE_PHOTO':
+            action.payload.likes--;
+            
+            return {
+                ...state,
+                photos: state.photos.map(photo => {
+                  if(photo.id === action.payload.id) {
+                    return {
+                      ...photo,
+                      likes: action.payload.likes,
+                    }
+                  }
+                  return photo;
+                })
+              };
+
         default:
             return state
     }

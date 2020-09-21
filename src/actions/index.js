@@ -18,3 +18,17 @@ export const auth = (isAuth) => {
   }
 }
 
+export const setLikePhoto = (photo) => {
+  return {
+      type: 'SET_LIKE_PHOTO',
+      payload: photo
+  }
+}
+
+export const unsetLikePhoto = (id) => {
+  return {
+      type: 'UNSET_LIKE_PHOTO',
+      payload: id
+  }
+}
+

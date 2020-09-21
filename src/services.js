@@ -1,7 +1,7 @@
 import Unsplash, {toJson} from 'unsplash-js';
 //import {photosLoaded} from './actions/index.js';
 import store from './store';
-import { photosLoaded } from './actions';
+import { photosLoaded, setLikePhoto, unsetLikePhoto } from './actions';
 
 // Создаем экземпляр объекта для доступа к API
   export const unsplash = new Unsplash({
@@ -50,6 +50,7 @@ import { photosLoaded } from './actions';
         else {
           alert('error');
         }
+        
       }
 
    loadMore() {
@@ -58,6 +59,45 @@ import { photosLoaded } from './actions';
      end = end + 10;
 
      this.loadPhotos();
+   }
+
+   likePhoto(id) {
+    const token = localStorage.getItem('token');
+    const photo = store.getState().photos.find(item => item.id===id);
+    console.dir(photo);
+    unsplash.auth.setBearerToken(token);
+    unsplash.photos.likePhoto(id)
+    .then(toJson)
+    .then(json => {
+      console.log("Вы поставили лайк");
+     // console.log(json);
+      store.dispatch(setLikePhoto(photo));
+      console.dir(store.getState().photos.find(item => item.id===id));
+        
+
+      })
+      .catch(err => console.log('Like err', err));
+    
+
+   }
+
+   unlikePhoto(id) {
+    const token = localStorage.getItem('token');
+    const photo = store.getState().photos.find(item => item.id===id);
+    console.dir(photo);
+    unsplash.auth.setBearerToken(token);
+    unsplash.photos.unlikePhoto(id)
+    .then(toJson)
+    .then(json => {
+      console.log("Вы сняли лайк");
+     // console.log(json);
+      store.dispatch(unsetLikePhoto(photo));
+      console.dir(store.getState().photos.find(item => item.id===id));
+        
+
+      })
+      .catch(err => console.log('unLike err', err));
+    
    }
 }
 

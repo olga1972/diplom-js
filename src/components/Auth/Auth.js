@@ -5,13 +5,15 @@ import {toJson} from 'unsplash-js';
 import { auth } from '../../actions/index.js';
 
 const Auth = () => {
-  let token = localStorage.getItem('token');
+  let token = localStorage.getItem('token') || '';
+  console.log(code, token);
   // Если код передан токен не был запрошен ранее, отправляем запрос на получение токена
     if (code && !token) {
       unsplash.auth.userAuthentication(code)
         .then(toJson)
         .then(json => { 
         // Сохраняем полученный токен
+        console.dir(json);
           unsplash.auth.setBearerToken(json.access_token);
           localStorage.setItem('token', json.access_token);
         })
