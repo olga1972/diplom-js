@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, request, GRAPHCMS_ENDPOINT, query}  from 'react';
 //import ReactDOM from 'react-dom';
 import { Route, Link, Switch } from 'react-router-dom';
 
@@ -6,18 +6,24 @@ import Header from '../../components/Header/Header';
 import Auth from '../../components/Auth/Auth';
 import PhotosList from '../../components/PhotosList/PhotosList';
 import PhotoDetails from '../../components/PhotoDetails/PhotoDetails';
+import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 import '../../components/PhotoDetails/photoDetails.scss';
+import '../../components/Loader/loader.scss';
 
 import GetServices, { unsplash, authenticationUrl } from '../../services';
+import store from '../../store';
 
 import { connect } from 'react-redux';
 
-import { photosRequested, photosLoaded, auth, setLikePhoto, unsetLikePhoto } from '../../actions';
+import { photosRequested, photosLoaded, auth, loading, setLikePhoto, unsetLikePhoto } from '../../actions';
 
 
 //Создаем новый объект класса GetServices
 const getServices = new GetServices(unsplash, authenticationUrl);
+
+let message = '';
 window.addEventListener('scroll', getScroll);
 
 
@@ -30,16 +36,29 @@ function getScroll() {
 }
 
   class App extends Component {
+
+    state = {
+      message : ''
+    }
+    
+
     handleClick (){
-      
       //Отправляем пользователя на страницу аутентификации
       window.location.assign(authenticationUrl);
       console.log('handleClick');
     }
 
     loadPhotos () {
-      
-      getServices.loadPhotos();
+      if(store.getState().isAuth) {
+        getServices.loadPhotos();
+      }
+      else {
+        const message = "Для просмотра фотографий нужно авторизоваться!";
+        console.log(message);
+        this.setState({message: message});
+        return message;
+      }
+      //return <ErrorMessage message = {this.message}/>
      // window.removeEventListener('scroll', getScroll);
     }
 
@@ -62,31 +81,41 @@ function getScroll() {
         btnLike.classList.remove('active');
         getServices.unlikePhoto(id);
       }
-      
-      
   }
 
   render() {
-
+    console.log('store ' + store.getState().isAuth);
+   
     return (
 
       <div key="app" className="wrapper">
         <Header></ Header>
 
-        <button onClick={this.handleClick}>Авторизация</button>
+        {store.getState().isLoading ? <Loader/> : null}
+       
 
-        <Link to='/photos' onClick={ this.loadPhotos }>
+        <button onClick={this.handleClick}>Авторизация</button>
+        {/* <Link to='/Auth' onClick={this.handleClick}>Авторизация</Link> */}
+
+        <Link to='/photos' onClick={ this.loadPhotos.bind(this) }>
           Загрузить фото
         </Link>
           {/* <button onClick={this.loadPhotos}>Загрузить фото</button> */}
         
         <button onClick={this.loadMore}>Загрузить ещё</button>
     
+        {this.state.message ? <ErrorMessage message = {this.state.message}/> : null}
+    
         <Switch>
           <Route key="Home" exact path='/' component={() => <h1>Welcome to Unsplash Photo-Viewer!</h1>}/>
-          <Route exact path='/Auth' component={ Auth } />
-            {/* {store.getState().isAuth ? <Route path='/photos' component={ PhotosList } /> : null } */}
-          <Route key="PhotosList" exact path='/photos' component={ PhotosList } />
+          <Route exact path='/Auth' component={Auth}/>
+         
+            {store.getState().isAuth ? 
+              <Route key="PhotosList" exact path='/photos' component={ PhotosList } /> 
+              : null}
+               {/* <ErrorMessage message = {'this.state.message'}/>  */}
+
+          {/* <Route key="PhotosList" exact path='/photos' component={ PhotosList } /> */}
           {/* <Route key="PhotoDetails" exact path='/photos/:id' component={ PhotoDetails }/> */}
           <Route key="PhotoDetails" exact path='/photos/:id'><PhotoDetails setLike={this.setLike}/></Route>
           {/* <Redirect to={'/'}/> */}
@@ -103,8 +132,7 @@ const mapStateToProps =  (state) =>{
       photos: state.photos,
       isAuth: state.isAuth,
       photoItem: state.photos,
-      //loading: state.loading,
-      //error: state.error
+      isLoading: state.isLoading,
   }
 }
 
@@ -113,9 +141,9 @@ const mapDispatchToProps = {
   photosRequested,
   photosLoaded,
   auth,
+  loading,
   setLikePhoto,
   unsetLikePhoto
-  //auth: (isAuth)=> {store.dispatch(auth(isAuth))}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App, getServices);

@@ -1,7 +1,7 @@
 import Unsplash, {toJson} from 'unsplash-js';
 //import {photosLoaded} from './actions/index.js';
 import store from './store';
-import { photosLoaded, setLikePhoto, unsetLikePhoto } from './actions';
+import { photosLoaded, setLikePhoto, unsetLikePhoto, loading } from './actions';
 
 // Создаем экземпляр объекта для доступа к API
   export const unsplash = new Unsplash({
@@ -20,6 +20,7 @@ import { photosLoaded, setLikePhoto, unsetLikePhoto } from './actions';
   // Считываем GET-параметр code из URL
   // www.example.com/auth?code=abcdef123456...
     export const code = window.location.search.split("code=")[1];
+    //export const code = false;
 
     let start = 1;
     let end =10;
@@ -38,17 +39,23 @@ import { photosLoaded, setLikePhoto, unsetLikePhoto } from './actions';
             console.log('json'); 
           return json;
         })
-      };
+      }
 
       loadPhotos() {
+        console.log('loadPhotos');
+       //let {message } = this.props;
         if(store.getState().isAuth) {
+          store.dispatch(loading('true'));
           const data = this.listPhoto(+start, +end, localStorage.getItem('token'));
           data.then(d => {
             store.dispatch(photosLoaded(d))
           })
         }
         else {
-          alert('error');
+          //store.dispatch(showError('true'));
+          //message = "Для просмотра фотографий нужно авторизоваться!";
+          //console.log(message);
+          //return message;
         }
         
       }

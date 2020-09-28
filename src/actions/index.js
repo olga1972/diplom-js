@@ -18,6 +18,27 @@ export const auth = (isAuth) => {
   }
 }
 
+export const loading = (isLoading) => {
+  return {
+      type: 'LOADING',
+      payload: isLoading
+  }
+}
+
+/* export const showError = (error) => {
+  return {
+      type: 'ERROR',
+      payload: error
+  }
+} */
+
+/* export const showMessageError = (message) => {
+  return {
+      type: 'MESSAGE_ERROR',
+      payload: message
+  }
+} */
+
 export const setLikePhoto = (photo) => {
   return {
       type: 'SET_LIKE_PHOTO',

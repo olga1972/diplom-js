@@ -3,8 +3,9 @@ const initialState = {
         {id: "mtNweauBsMQ", created_at: "2015-09-29T07:49:08-04:00", updated_at: "2020-08-28T01:05:17-04:00", promoted_at: "2015-09-29T07:49:08-04:00", width: 5683}
     ],
     isAuth : false,
-    //loading: true,
+    isloading: false,
     //error: false,
+    message: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -12,13 +13,34 @@ const reducer = (state = initialState, action) => {
         case ('AUTH'):
             return {
                 ...state,
-                isAuth: true
+                isAuth: action.payload,
+                isLoading: false,
             }
+        case ('LOADING'):
+          return {
+            ...state,
+            isLoading: true
+          }
+
+          /* case ('ERROR'):
+            return {
+              ...state,
+              error: true
+            } */
+
+            /* case ('MESSAGE_ERROR'):
+              console.log('MESSAGE_ERROR');
+              console.log(action.payload)
+            return {
+              ...state,
+              message: action.payload
+            } */
+
         case 'PHOTOS_LOADED':
             return {
                 ...state,
                 photos: action.payload,
-                //loading: false,
+                isLoading: false,
                 //error: false
             }
 
@@ -48,7 +70,7 @@ const reducer = (state = initialState, action) => {
 
         case 'UNSET_LIKE_PHOTO':
             action.payload.likes--;
-            
+
             return {
                 ...state,
                 photos: state.photos.map(photo => {
