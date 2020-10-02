@@ -1,0 +1,33 @@
+.my-gallery-class {
+    width: 100%;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+
+.image-element-class {
+  border: 10px solid #ffffff;
+  background-color: #fff;
+  color: #000000;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  //width: 220px;
+  width: calc(100%/5 - 20px);
+  //margin-bottom: 60px;
+  //margin-right: 60px;
+  @media (max-width: 1300px) {
+    width: calc(100%/4 - 20px);
+  }
+  @media (max-width: 960px) {
+    width: calc(100%/3 - 20px);
+  }
+  @media (max-width: 760px) {
+    width: calc(100%/2 - 20px);
+  }
+  @media (max-width: 480px) {
+    width: calc(100%);
+    border: none;
+  }
+}
+

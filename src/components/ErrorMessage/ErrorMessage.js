@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
+import './errorMessage.scss';
 
 class ErrorMessage extends Component {
     render() {
-        let {message} = this.props;
+        let {message, classError} = this.props;
+        const classes = ['message'];
+
+        if (classError) {
+            classes.push('message--error');
+        }
         return (
             <>
-                <h2>Component Mesage {message}</h2>
+                <h2 className={classes.join(' ')}>{message}</h2>
             </>
         )
     }
 }
 
-
 export default ErrorMessage;
+
+
+

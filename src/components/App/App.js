@@ -1,10 +1,10 @@
-import React, {Component, request, GRAPHCMS_ENDPOINT, query}  from 'react';
+import React, { Component }  from 'react';
 //import ReactDOM from 'react-dom';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Auth from '../../components/Auth/Auth';
-import PhotosList from '../../components/PhotosList/PhotosList';
+import Gallery from '../../components/Gallery/Gallery';
 import PhotoDetails from '../../components/PhotoDetails/PhotoDetails';
 import Loader from '../../components/Loader/Loader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
@@ -19,28 +19,45 @@ import { connect } from 'react-redux';
 
 import { photosRequested, photosLoaded, auth, loading, setLikePhoto, unsetLikePhoto } from '../../actions';
 
+import './app.scss';
+
 
 //Создаем новый объект класса GetServices
 const getServices = new GetServices(unsplash, authenticationUrl);
 
-let message = '';
-window.addEventListener('scroll', getScroll);
+
+//window.addEventListener('scroll', getScroll);
 
 
 function getScroll() {
-  if(document.body.scrollHeight === document.body.offsetHeight) {
-    getServices.loadMore();
-    window.removeEventListener('scroll', getScroll);
+  const wrap = document.querySelector('.wrapper');
+  const scrollTop = window.pageYOffset;
+  const heightWindow = window.innerHeight;
+  const heightWrap = wrap.getBoundingClientRect().height;
+
+  if((scrollTop + heightWindow - heightWrap) >= 0){
+      console.log('end page');
+      this.loadMore();
+      window.removeEventListener('scroll', getScroll);
   }
-  
 }
 
   class App extends Component {
 
     state = {
-      message : ''
+      message : '',
+      classError: false
     }
     
+
+  componentDidMount() {
+   // window.addEventListener('scroll', getScroll);
+} 
+
+componentDidUpdate() {
+  /* console.log('didUpdate');
+  window.addEventListener('scroll', getScroll); */
+}
 
     handleClick (){
       //Отправляем пользователя на страницу аутентификации
@@ -54,18 +71,21 @@ function getScroll() {
       }
       else {
         const message = "Для просмотра фотографий нужно авторизоваться!";
-        console.log(message);
-        this.setState({message: message});
+        const classError = true;
+        this.setState({message: message });
+        this.setState({classError: classError });
+        
         return message;
       }
-      //return <ErrorMessage message = {this.message}/>
-     // window.removeEventListener('scroll', getScroll);
+      return <ErrorMessage classError={this.classError} message = {this.state.message}/>
+     
     }
 
     loadMore () {
-      //window.addEventListener('scroll', getScroll);
+      console.log('loadMore');
       getServices.loadMore();
-      //window.removeEventListener('scroll', getScroll);
+      //window.addEventListener('scroll', getScroll);
+      window.removeEventListener('scroll', getScroll);
     }
 
     setLike(id) {
@@ -85,7 +105,7 @@ function getScroll() {
 
   render() {
     console.log('store ' + store.getState().isAuth);
-   
+       
     return (
 
       <div key="app" className="wrapper">
@@ -94,24 +114,23 @@ function getScroll() {
         {store.getState().isLoading ? <Loader/> : null}
        
 
-        <button onClick={this.handleClick}>Авторизация</button>
+        <button className="btn" onClick={this.handleClick}>Авторизация</button>
         {/* <Link to='/Auth' onClick={this.handleClick}>Авторизация</Link> */}
 
-        <Link to='/photos' onClick={ this.loadPhotos.bind(this) }>
+        <Link className="btn" to='/photos' onClick={ this.loadPhotos.bind(this) }>
           Загрузить фото
         </Link>
-          {/* <button onClick={this.loadPhotos}>Загрузить фото</button> */}
+
         
-        <button onClick={this.loadMore}>Загрузить ещё</button>
+        <button className="btn" onClick={this.loadMore}>Загрузить ещё</button>
     
+        {/* {this.state.message ? <ErrorMessage classError={this.state.classError} message = {this.state.message}/> : null} */}
         {this.state.message ? <ErrorMessage message = {this.state.message}/> : null}
-    
         <Switch>
-          <Route key="Home" exact path='/' component={() => <h1>Welcome to Unsplash Photo-Viewer!</h1>}/>
           <Route exact path='/Auth' component={Auth}/>
          
             {store.getState().isAuth ? 
-              <Route key="PhotosList" exact path='/photos' component={ PhotosList } /> 
+              <Route key="PhotosList" exact path='/photos'><Gallery getServices={this.getServices}/></Route> 
               : null}
                {/* <ErrorMessage message = {'this.state.message'}/>  */}
 

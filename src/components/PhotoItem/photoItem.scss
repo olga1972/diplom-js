@@ -1,0 +1,38 @@
+.photo__container {
+    padding: 10px 5px;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.photo__likes {
+    padding-left: 20px;
+    background-image: url('http://localhost:8080/images/thumbs-o-up.svg');
+    background-position: 0 0;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+}
+
+.photo__info {
+    max-width: 200px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.photo__author {
+    display: block;
+    text-align: left; 
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 10px;
+
+    &:hover {
+        text-decoration: underline;
+        color: #0D0439;
+    }
+
+    &:visited {
+        text-decoration: underline;
+        color: #0D0439;
+    }
+}

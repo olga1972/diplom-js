@@ -1,0 +1,51 @@
+body {
+    background-color: #0D0439;
+    color: #ffffff;
+    
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    //border: 1px solid green;
+    //text-align: center;
+    padding: 40px;
+}
+
+
+
+.btn {
+    padding: 10px 20px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 10px;
+    text-transform: uppercase;
+    background-color:#0D0439;
+    margin-bottom: 40px;
+}
+
+.btn:hover {
+    border-color: #0D0439;
+    
+    color: #0D0439;
+    text-transform: uppercase;
+    background-color: #ffffff;
+    transition: all 0.4s;
+}
+
+.message {
+    background-color: #cccccc;
+    border-radius: 10px;
+    color: #000000;
+    padding: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message--error {
+    color: red;
+}

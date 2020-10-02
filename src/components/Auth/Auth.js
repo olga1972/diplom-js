@@ -5,9 +5,8 @@ import {toJson} from 'unsplash-js';
 import { auth } from '../../actions/index.js';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
-//const Auth = () => {
 class Auth extends Component {
-  
+
   render() {
    const token = localStorage.getItem('token') || '';
 
@@ -27,7 +26,7 @@ class Auth extends Component {
             
             localStorage.setItem('token', json.access_token);
             store.dispatch(auth('true'));
-            const message = "Вы успешно авторизовались!!!!!!"
+            const message = "Вы успешно авторизовались!"
             
             return <ErrorMessage message = {message}/>
            
@@ -35,7 +34,7 @@ class Auth extends Component {
           .catch(err => {
             console.log('Auth err', err);
             store.dispatch(auth('false'));
-            const message = "Ошибка авторизации!!!!!!!";
+            const message = "Ошибка авторизации!";
             return <ErrorMessage message = {message}/>
           })
     }
@@ -43,7 +42,7 @@ class Auth extends Component {
       console.log('else');
         store.dispatch(auth('true'));
 
-        const message = "Вы успешно авторизовались!!!!!!"
+        const message = "Вы успешно авторизовались!"
         return <ErrorMessage message = {message}/>
     }
 

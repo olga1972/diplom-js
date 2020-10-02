@@ -1,6 +1,6 @@
 const initialState = {
     photos: [
-        {id: "mtNweauBsMQ", created_at: "2015-09-29T07:49:08-04:00", updated_at: "2020-08-28T01:05:17-04:00", promoted_at: "2015-09-29T07:49:08-04:00", width: 5683}
+        
     ],
     isAuth : false,
     isloading: false,

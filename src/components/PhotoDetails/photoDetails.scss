@@ -1,3 +1,74 @@
-.active {
-    background-color: red;
+.photo {
+    margin-bottom: 0;
+}
+
+.photo__wrap {
+    width: 1080px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    padding: 10px 100px;
+    box-sizing: border-box;
+}
+
+
+
+.photo__info-details {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    max-width: none;
+}
+
+
+
+.photo__info-details .like {
+    width: 18px;
+    height: 18px;
+    padding-right: 30px;
+    background-color: transparent;
+    background-image: url('http://localhost:8080/images/heart-o.svg');
+    background-position: 0 right;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.photo__info-details .active {
+    background-image: url('http://localhost:8080/images/heart.svg');
+}
+
+.like {
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    background-image: url('http://localhost:8080/images/hand-o-left.svg');
+    background-position: center center;
+    background-size: 18px 18px;
+    outline: none;
+    border: none;
+
+}
+
+.btn {
+    padding: 10px 20px;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 10px;
+    text-transform: uppercase;
+    background-color:#0D0439;
+    margin-bottom: 40px;
+}
+
+.btn:hover {
+    border-color: #0D0439;
+    color: #0D0439;
+    text-transform: uppercase;
+    background-color: #ffffff;
+    transition: all 0.4s;
 }
