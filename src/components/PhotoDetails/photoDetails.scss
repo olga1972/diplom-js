@@ -1,16 +1,33 @@
 .photo {
-    margin-bottom: 0;
+    margin: 0;
+    margin-bottom: 30px;
+    border: 10px solid #ffffff;
+    background-color: #ffffff;
+}
+
+.photo__preview {
+    display: block;
+    margin: 0 auto;
 }
 
 .photo__wrap {
-    width: 1080px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    background-color: #ffffff;
+    max-width: 1080px;
     color: #000000;
     font-size: 20px;
     padding: 10px 100px;
     box-sizing: border-box;
+
+    @media (min-width: 320px) and (max-width: 499px) {
+        max-width: 320px;
+        padding: 10px 0;
+        font-size: 16px;
+    }
+
+    @media (min-width: 500px) and (max-width: 1119px) {
+        max-width: 400px;
+        padding: 10px;
+        font-size: 18px;
+    }
 }
 
 
@@ -20,6 +37,12 @@
     justify-content: space-between;
     flex-direction: row;
     max-width: none;
+
+    @media (min-width: 320px) and (max-width: 499px) {
+        max-width: 320px;
+        padding: 0;
+        font-size: 16px;
+    }
 }
 
 
@@ -29,29 +52,35 @@
     height: 18px;
     padding-right: 30px;
     background-color: transparent;
-    background-image: url('http://localhost:8080/images/heart-o.svg');
+    background-image: url('/images/heart-o.svg');
     background-position: 0 right;
     background-size: 18px 18px;
     background-repeat: no-repeat;
     outline: none;
     border: none;
     cursor: pointer;
+
+    @media (min-width: 320px) and (max-width: 499px) {
+        width: 16px;
+        height: 16px;
+        background-size: 16px 16px;
+    }
 }
 
 .photo__info-details .active {
-    background-image: url('http://localhost:8080/images/heart.svg');
+   background-image: url('/images/heart.svg');
 }
 
 .like {
     width: 18px;
     height: 18px;
     background-color: transparent;
-    background-image: url('http://localhost:8080/images/hand-o-left.svg');
+    background-image: url('/images/hand-o-left.svg');
     background-position: center center;
     background-size: 18px 18px;
     outline: none;
     border: none;
-
+    padding: 0;
 }
 
 .btn {
@@ -71,4 +100,17 @@
     text-transform: uppercase;
     background-color: #ffffff;
     transition: all 0.4s;
+}
+
+.btn.back {
+    background-color: transparent;
+    background-image: url('/images/hand-o-left.svg');
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    padding: 10px 20px 10px 40px;
+
+    &:hover {
+        background-image: url('/images/hand-o-left-black.svg');
+    }
 }

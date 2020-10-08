@@ -4,6 +4,7 @@ import './errorMessage.scss';
 class ErrorMessage extends Component {
     render() {
         let {message, classError} = this.props;
+
         const classes = ['message'];
 
         if (classError) {

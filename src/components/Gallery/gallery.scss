@@ -12,10 +12,8 @@
   background-color: #fff;
   color: #000000;
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
-  //width: 220px;
   width: calc(100%/5 - 20px);
-  //margin-bottom: 60px;
-  //margin-right: 60px;
+
   @media (max-width: 1300px) {
     width: calc(100%/4 - 20px);
   }

@@ -6,12 +6,6 @@ import {BrowserRouter as Router} from 'react-router-dom';
 
 import store from './store';
 
-
-//import './index.scss';
-
-//import 'bootstrap/dist/css/bootstrap.css';
-
-
 ReactDOM.render(
   <Provider store={store}>
     <Router>

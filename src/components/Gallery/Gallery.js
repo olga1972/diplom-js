@@ -8,31 +8,26 @@ import './images/thumbs-o-up.svg';
 
 
 class Gallery extends React.Component {
-    
     render() {
-
-    const masonryOptions = {
-        transitionDuration: 0
-    };
-
-    const imagesLoadedOptions = { background: '.my-bg-image-el' };
-
-    const photoItems = store.getState().photos;
-
-    const items = Object.assign(photoItems).map (photo => {
-        let options = {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            timezone: 'UTC',
+        const masonryOptions = {
+            transitionDuration: 0
         };
-        
-        const dateFormated = new Date(photo.created_at).toLocaleString("ru", options);
-        //console.dir(photo.urls['thumb']);
+
+        const photoItems = store.getState().photos;
+
+        const items = Object.assign(photoItems).map (photo => {
+            const options = {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                timezone: 'UTC',
+            };
+
+            const dateFormated = new Date(photo.created_at).toLocaleString("ru", options);
 
         return (
             <li key={photo.id} className="image-element-class">
-                <PhotoItem 
+                <PhotoItem
                     key = { photo.id }
                     id = { photo.id}
                     preview = { photo.urls['thumb']}
@@ -44,12 +39,12 @@ class Gallery extends React.Component {
             </li>
         );
     });
+
     return (
         <Masonry
             className={'my-gallery-class'}
             elementType={'ul'}
             options={masonryOptions}
-            imagesLoadedOptions={imagesLoadedOptions}
         >
             {items}
         </Masonry>
