@@ -8,6 +8,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 class Auth extends Component {
 
   render() {
+    
     console.log('props auth ' + this.props);
    const token = localStorage.getItem('token') || '';
 

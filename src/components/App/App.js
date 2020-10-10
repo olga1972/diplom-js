@@ -35,8 +35,6 @@ function getScroll() {
     let positionScroll = scrollTop + heightWindow - heightWrap;
     
     if(positionScroll >= 0){
-      console.log('scroll' + positionScroll);
-      console.log('end page');
       getServices.loadMore();
       window.scrollTo({
         top: 0,
@@ -77,7 +75,16 @@ class App extends Component {
   }
 
   loadMore () {
-    getServices.loadMore();
+    if(store.getState().isAuth) {
+      getServices.loadMore();
+    }
+    else {
+      const message = "Для просмотра фотографий нужно авторизоваться!";
+      const classError = true;
+      this.setState({message: message });
+      this.setState({classError: classError });
+    }
+    return <ErrorMessage classError = {this.classError} message = {this.message}/>
   }
 
   setLike(id) {
@@ -98,15 +105,16 @@ class App extends Component {
       <>
 
         <Header/>
-       
+
         <div className="btn-wrap">
           <button className="btn" onClick={this.handleClick}>Авторизация</button>
-          
+
           <Link className="btn" to='/photos' onClick={ this.loadPhotos.bind(this) }>
             Загрузить фото
           </Link>
-        
-          <button className="btn" onClick={this.loadMore}>Загрузить ещё</button>
+
+          <button className="btn" onClick={this.loadMore.bind(this)}>Загрузить ещё</button>
+
         </div>
 
         <div key="app" className="wrapper">
