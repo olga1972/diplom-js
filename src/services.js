@@ -7,6 +7,7 @@ export const unsplash = new Unsplash({
   accessKey: "rOCoQmwn-eMbE_b57Bgd9LlZmpYTmTlp8dyQ8i3tBds",
   secret: "vO_eYWwcjZtP10-Hk533hzyR9ZMsOESWTft6j1_i_Tc",
   callbackUrl: "https://olga.sadyreva.bhuser.ru/auth",
+  //callbackUrl: "http://localhost:8080/auth",
 });
 
 //Генерируем адрес страницы аутентификации на unsplash.com

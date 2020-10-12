@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 
 import { photosLoaded, auth, loading, setLikePhoto, unsetLikePhoto } from '../../actions';
 
+import '../../fonts.scss';
 import './app.scss';
 
 //Создаем новый объект класса GetServices
@@ -27,20 +28,14 @@ const getServices = new GetServices(unsplash, authenticationUrl);
 function getScroll() {
   let url = window.location.pathname;
   if(url === '/photos') {
-    const wrap = document.querySelector('.wrapper');
-    const scrollTop = window.pageYOffset;
-    const heightWindow = window.innerHeight;
-    const heightWrap = wrap.getBoundingClientRect().height + 350;
-
-    let positionScroll = scrollTop + heightWindow - heightWrap;
-    
-    if(positionScroll >= 0){
+    let scrolled = window.pageYOffset;
+    const windowHeight = window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+  
+    while (pageHeight - windowHeight - scrolled === 0) {
       getServices.loadMore();
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
       window.removeEventListener('scroll', getScroll, false, true);
+      break;
     }
   }
 }
@@ -50,10 +45,11 @@ class App extends Component {
   state = {
     message : '',
     classError: false,
+    photosLoaded: false
   }
 
   componentDidUpdate() {
-    window.addEventListener('scroll', getScroll, false, true);
+   window.addEventListener('scroll', getScroll, false, true);
   }
 
   handleClick (){
@@ -62,8 +58,11 @@ class App extends Component {
   }
 
   loadPhotos () {
+    
     if(store.getState().isAuth) {
+      this.setState({photosLoaded: true });
       getServices.loadPhotos();
+      
     }
     else {
       const message = "Для просмотра фотографий нужно авторизоваться!";
@@ -109,12 +108,15 @@ class App extends Component {
         <div className="btn-wrap">
           <button className="btn" onClick={this.handleClick}>Авторизация</button>
 
-          <Link className="btn" to='/photos' onClick={ this.loadPhotos.bind(this) }>
-            Загрузить фото
-          </Link>
+          {store.getState().isAuth ?
+            <Link className="btn btn--link" to='/photos' onClick={ this.loadPhotos.bind(this) }>
+              Загрузить фото
+            </Link>
+          : null}
 
-          <button className="btn" onClick={this.loadMore.bind(this)}>Загрузить ещё</button>
-
+          {store.getState().isAuth && this.state.photosLoaded ?
+            <button className="btn" onClick={this.loadMore.bind(this)}>Загрузить ещё</button>
+          : null}
         </div>
 
         <div key="app" className="wrapper">

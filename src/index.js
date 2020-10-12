@@ -6,6 +6,8 @@ import {BrowserRouter as Router} from 'react-router-dom';
 
 import store from './store';
 
+import './fonts.scss';
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>
